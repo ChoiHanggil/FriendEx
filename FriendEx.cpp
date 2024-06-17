@@ -110,11 +110,66 @@ public:
 		result.mY = mY / rhs.mY;
 		return result;
 	}
+	/*
+	// pre-fix 전위연산자
+	Point2D& operator++()
+	{
+		Point2D temp(mX, mY);
 
+		mX = mX + 1;
+		mY = mY + 1;
+
+		return *this;
+	}
+	// post-fix 후위연산자
+	Point2D operator++(int dummy)
+	{
+		Point2D temp(mX, mY);
+
+		mX = mX + 1;
+		mY = mY + 1;
+
+		return temp;
+	}
+	*/
+
+	int& operator[](int index)
+	{
+		if (index <= 0)
+		{
+			return mX;
+		}
+		else
+		{
+			return mY;
+		}
+	}
+
+	operator float()const
+	{
+		return sqrt(mX * mX + mY * mY);
+	}
+
+	void operator ()()
+	{
+		mX = mY = 0;
+	}
+	void operator ()(int x, int y)
+	{
+		mX = x;
+		mY = y;
+	}
+	friend std::ostream& operator << (std::ostream& os, Point2D pt);
 	//friend Point2D operator + (Point2D lhs, Point2D rhs);
+	friend Point2D& operator ++ (Point2D& pt);
+	friend Point2D operator ++ (Point2D& pt,int dummy);
 };
 
-
+std::ostream& operator << (std::ostream& os, Point2D pt)
+{
+	os << "(" << pt.mX << "," << pt.mY << ")";
+	return os;
+}
 //키워드 추가, 연산자 오버로딩
 /*
 Point2D operator + (Point2D lhs, Point2D rhs)
@@ -126,10 +181,23 @@ Point2D operator + (Point2D lhs, Point2D rhs)
 }
 */
 
-struct a
+Point2D& operator ++ (Point2D& pt)
 {
+	pt.mX = pt.mX + 1;
+	pt.mY = pt.mY + 1;
+	
+	return pt;
+}
 
-};
+Point2D operator++(Point2D& pt, int dummy)
+{
+	Point2D temp(pt.mX, pt.mY);
+
+	pt.mX = pt.mX + 1;
+	pt.mY = pt.mY + 1;
+
+	return temp;
+}
 
 int main()
 {
@@ -156,8 +224,9 @@ int main()
 	Point2D pt4 = pt1.operator+(pt2);
 	pt4.Print();
 	*/
+	/*
 	Point2D pt1(2, 2), pt2(2, 0);
-	
+
 	Point2D result = pt1 + pt2;
 	result.Print();
 
@@ -169,6 +238,10 @@ int main()
 
 	result = pt1 / pt2;
 	result.Print();
+	*/
+	//-------------------------------------------------------
+	
+
 }
 
 
